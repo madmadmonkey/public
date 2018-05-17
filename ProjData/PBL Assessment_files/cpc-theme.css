@@ -1,0 +1,18 @@
+body{
+    background-image: url("../../images/RR_ pattern.png");
+}
+
+body.test-window{
+    background-image: none;
+}
+
+#breadcrumb{
+    background: #00accd;
+    color: #fff;
+}
+
+.btn.btn-primary{
+    background-color: #00accd ;
+    border-color:#00accd;
+    color: #ffffff ;
+}

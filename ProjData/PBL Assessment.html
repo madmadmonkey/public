@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://10.201.174.55:9090/PBLCPC/cpcmain.jsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        
+        <meta http-equiv="X-UA-Compatible" value="IE=Edge">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, private, must-revalidate, max-stale=0, post-check=0, pre-check=0, no-store">
+        
+        <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8">
+        <meta name="viewport" content="initial-scale=1.0">
+
+        <title> PBL Assessment </title>
+
+        <link href="./PBL Assessment_files/cpc-essentials.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="./PBL Assessment_files/cpc-theme.css">
+        <link rel="stylesheet" href="./PBL Assessment_files/user.css">
+        <link rel="stylesheet" type="text/css" href="./PBL Assessment_files/jquery.countdown.css"> 
+        <link rel="stylesheet" type="text/css" href="./PBL Assessment_files/jquery-confirm.min.css"> 
+
+        <script type="text/javascript" src="./PBL Assessment_files/jquery.plugin.js.download"></script> 
+        <script type="text/javascript" src="./PBL Assessment_files/jquery.countdown.js.download"></script>
+
+        <script src="./PBL Assessment_files/jquery-1.8.3.js.download"></script>
+        <script src="./PBL Assessment_files/jquery-confirm.min.js.download"></script>
+        <link rel="shortcut icon" href="http://10.201.174.55:9090/PBLCPC/imgs/favicon.ico">
+        
+    </head>
+
+
+    <body>
+        
+
+        <script type="text/javascript">
+            // (function(){
+            //   setTimeout(showAlert,10000)
+            //})();
+            //function showAlert(){
+            //  alert("Time Over");
+            //}
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                var auto = setInterval(function () {
+                    $('#tm').load('/PBLCPC/timedisplay').fadeIn("slow");
+                }, 1000);
+
+                setTimeout(function () {   //calls click event after a certain time
+                    var tnum = $("#trno").val();
+                    //var currentTime=new Date();
+                    //var hours = currentTime.getHours();
+                    //var mins = currentTime.getMinutes();
+                    //alert(hours);
+                    //if (tnum=='44732' || tnum=='44788'){
+                    //  if (mins==16 && hours>5){
+                    //alert("Time");
+ $("#btn1").attr("disabled", true);
+                    $("#btn2").attr("disabled", true);
+                    $("#btnupload").attr("disabled", true);                    
+$.alert({
+                        title: 'Alert!',
+                        content: '<center><img src="imgs/timeout.jpg" style="width:450px;height=350px;"></center><center><h5 style="font-size:17px;color:red;"><strong>Your last submitted code is taken for score generation</strong></h5></center>'
+                    });
+
+                    $.confirm({
+                        title: "Final Submission",
+                        content: "Your code will be submitted for final evaluation.",
+                        confirmButtonClass: 'btn-info',
+                        cancelButtonClass: 'btn-danger',
+                        animation: 'zoom',
+                        container: 'body',
+                        confirm: function () {
+                            //confirm("You had clicked Final Submission. This will generate your final marking");
+                            id = "Testing";
+
+                            $("#result").html('');
+                            $("#result").html('<center><h4> Please wait while your final marks are generated </h4></center>');
+
+                            var img = $('<img />',
+                                    {id: 'imgProgress',
+                                        src: 'imgs/ajax_loader.gif',
+                                        alt: 'MyAlt'})
+                                    .appendTo($('#result'));
+
+                            var tnum = $("#trno").val();
+                            var team = $("#team").val();
+
+                            $("img").attr("style", "align:center");
+                            $("#imgProgress").show();
+                            $("#title").show();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/PBLCPC/Programmer_marking',
+                                cache: false,
+                                data: {BatchNum: tnum, teamNum: team},
+                                dataType: 'html',
+                                success: function (html) {
+                                    //jQuery("#sample").html("hai");
+                                    $("title").hide();
+                                    $("#imgProgress").hide();
+                                    $("#result").html(html);
+                                    $("#btn1").attr("disabled", true);
+                                    $("#btn2").attr("disabled", true);
+                                    $("#btnupload").attr("disabled", true);
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error in Report");
+                                    alert(errorThrown);
+                                }
+                            });
+                        }
+                    });
+
+
+                }, 9000000);
+
+                // $('body').mouseover(function() {
+                //  var auto=setInterval(function(){
+                // $('#tm').load('/PBLCPC/timeout.jsp').fadeIn("slow");
+                //},1000);
+                //alert("Time Over");
+
+                //});
+
+
+                $("#btn2").on("click", function () {
+
+                    $.confirm({
+                        title: "Final Submission",
+                        content: "Your code will be submitted for final evaluation. You will not be able to re-submit after final submission. Do you want to proceed?",
+                        confirmButtonClass: 'btn-info',
+                        cancelButtonClass: 'btn-danger',
+                        animation: 'zoom',
+                        container: 'body',
+                        confirm: function () {
+                            //confirm("You had clicked Final Submission. This will generate your final marking");
+                            id = "Testing";
+
+                            $("#result").html('');
+                            $("#result").html('<center><h4> Please wait while your final marks are generated </h4></center>');
+
+                            var img = $('<img />',
+                                    {id: 'imgProgress',
+                                        src: 'imgs/ajax_loader.gif',
+                                        alt: 'MyAlt'})
+                                    .appendTo($('#result'));
+
+                            var tnum = $("#trno").val();
+                            var team = $("#team").val();
+
+                            $("img").attr("style", "align:center");
+                            $("#imgProgress").show();
+                            $("#title").show();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/PBLCPC/Programmer_marking',
+                                cache: false,
+                                data: {BatchNum: tnum, teamNum: team},
+                                dataType: 'html',
+                                success: function (html) {
+                                    //jQuery("#sample").html("hai");
+                                    $("title").hide();
+                                    $("#imgProgress").hide();
+                                    $("#result").html(html);
+                                    $("#btn1").attr("disabled", true);
+                                    $("#btn2").attr("disabled", true);
+                                    $("#btnupload").attr("disabled", true);
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error in Report");
+                                    alert(errorThrown);
+                                }
+                            });
+                        }
+                    });
+
+
+
+                    return false;
+                });
+
+
+                $("#btn1").on("click", function () {
+
+                    id = "Testing";
+                    $("#result").html('');
+                    $("#result").html('<center><h4> Please wait while your program is Compiled and Tested </h4></center>');
+
+                    var img = $('<img />',
+                            {id: 'imgProgress',
+                                src: 'imgs/ajax_loader.gif',
+                                alt: 'MyAlt'})
+                            .appendTo($('#result'));
+
+                    var tnum = $("#trno").val();
+                    var team = $("#team").val();
+                    var mile = $("#milestone").val();
+
+                    $("img").attr("style", "align:center");
+                    $("#imgProgress").show();
+                    $("#title").show();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/PBLCPC/Programmer_Input',
+                        cache: false,
+                        data: {BatchNum: tnum, teamNum: team, mileStone:mile},
+                        dataType: 'html',
+                        success: function (html) {
+                            //jQuery("#sample").html("hai");
+                            $("title").hide();
+                            $("#imgProgress").hide();
+                            $("#result").html(html);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(jqXHR.responseText); 
+                            $("title").hide();
+                            $("#imgProgress").hide();
+                            $("#result").html('<center><h4> Error Occured - No Response from Server.</h4></center><br><center><h5>Kindly check Network connection.Kindly check the zip file [ should contain src only ] and upload again.</h5></center><br><center><h4>If Problem continues....</h4></center><br><center><h5>Kindly clear Browser Cache and Re-Login to continue</h5></center>');
+                        }
+                    });
+
+                    return false;
+                });
+
+            });
+        </script>
+
+        <div id="header">
+            <div class="wrapper">
+                <div id="logo" class="floatcenter">
+                    <center><img src="./PBL Assessment_files/wipro.png" alt=""></center>
+                </div>
+                <div class="clearer"></div>
+            </div>
+        </div>
+
+
+        <input id="isPracticeTest" value="false" type="hidden">
+
+
+        <div id="breadcrumb">
+            <div class="wrapper"><span style="float:left;">Assessment Milestone - <strong>Demo</strong></span><span style="float:right;"> Manik Mondal</span></div>
+        <div class="wrapper" id="tm">
+
+
+
+
+
+
+
+
+    
+        
+        <link rel="stylesheet" type="text/css" href="./PBL Assessment_files/jquery-confirm.min.css"> 
+        
+    
+
+    
+        
+        <div>
+            <center><span> <strong>Time Left : 02:18:38</strong></span></center>
+           
+
+             
+        </div>
+
+    
+
+</div>
+        </div>
+
+        <div id="defaultCountdown">
+        <br>
+        <div id="content">
+            <div>
+                <div>
+                    <div class="row">
+                        <div style="margin-left:20px;" class="col-md-6 col-sm-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Project Specification
+                                </div>
+                                <div style="height:645px;" class="panel-body">
+                                    
+                                   <iframe id="iframe2" src="./PBL Assessment_files/Ass2Cms.html" frameborder="0" style="overflow: scroll; " height="100%" width="100%"></iframe> 
+<!-- <iframe id='iframe2' src="/pbl/cpc/timeout.html" frameborder="0" style="overflow: scroll; " height="100%" width="100%"></iframe> -->
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <div class="row">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        Project Upload &amp; Test
+                                        
+                                        
+                                    </div>
+
+
+                                    <div style="height:330px;overflow: hidden;" class="panel-body">
+
+                                        <div>
+
+                                            
+                                            
+                                            
+                                                <div class="alert alert-info">
+                                                    <center><strong>Test Duration : 2.30 Hours</strong></center>
+
+                                                </div>
+                                            
+                                        </div>
+                                        <form id="uploadAction" name="uploadAction" action="http://10.201.174.55:9090/PBLCPC/uploadAction.action" method="POST" enctype="multipart/form-data">
+    <fieldset>
+
+                                           <p align="right" style="margin-bottom: 0; margin-top:0"><a href="http://10.201.174.55:9090/pbl/cpc/templates/Ass2Cms.zip">Download Source Template</a></p> 
+                                            <h5> * Select the <strong>Zip</strong> file of your project to upload</h5>
+                                            <h5> * The <strong>Zip</strong> file should contain only the src folder of your project</h5>
+                                            <div class="col-md-8 col-sm-8">
+                                                
+<div class="control-group "><label class="control-label" for="uploadAction_uploadFile">Choose File</label><div class="controls">
+<input type="file" name="uploadFile" size="10" value="" id="uploadAction_uploadFile" title=" "></div>
+</div>
+
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <br><br>
+
+                                                
+                                                    <input type="submit" id="btnupload" name="submit" value="Upload Zip File" class="btn btn-primary btn-small ">
+
+                                                
+                                                
+
+                                            </div>
+
+                                            </fieldset></form>
+
+
+
+<script type="text/javascript">
+if(typeof jQuery != 'undefined') {
+    if(typeof jQuery.fn.tooltip == 'function') {
+        jQuery('i.s2b_tooltip').tooltip();
+    }
+}
+</script>
+
+
+                                        <hr>
+
+
+                                        <form id="cpcmain" name="cpcmain" action="http://10.201.174.55:9090/PBLCPC/cpcmain.jsp" method="post">
+                                            <input type="hidden" name="batchNum" value="201802" id="trno">
+                                            <input type="hidden" name="teamNum" value="1903" id="team">
+                                            <input type="hidden" name="mileStone" value="0" id="milestone">
+                                            <input type="hidden" name="time" value="02:29:32" id="time">
+                                            
+                                                <input type="submit" id="btn1" name="btnSubmit" value="Compile &amp; Test" class="btn btn-primary btn-small ">
+
+                                                <input type="submit" id="btn2" name="btn2Submit" value="Final Submission" class="btn btn-primary btn-small " style="float:right;">
+
+                                            
+                                            
+                                            
+                                        </form>
+
+
+
+
+
+                                    </div>
+
+                                </div>
+                                <div id="repo" class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        CPC Test Result
+                                    </div>
+                                    <div name="result" id="result" style="height:250px;overflow: hidden" class="panel-body">
+                                        <center><h5 id="title" style="display: none;"> Please wait while your program is compiled and Tested </h5></center>
+                                        <center> <img src="./PBL Assessment_files/ajax_loader.gif" style="display: none;" id="imgProgress"></center>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    
+                    
+
+</div></div></div></div></body></html>
